@@ -1,244 +1,141 @@
 #include <iostream>
 using namespace std;
-struct node
+class ArrayPlaying
 {
+	int arr[7] = { 1,2,3,4,56,5 };
+	int* ptr = arr;
+	
 
-	int data;
-	node* next;
-};
-class list
-{
-	node* head, *temp,*temp1,* tail;
 public:
-	list()
+	void Length()
 	{
-		head = NULL;
-		tail = NULL;
-        temp=NULL;
-        temp1=NULL;
+		int arrLength = *(&arr + 1) - arr;
+		cout << "Lngth of the array is " << arrLength << endl;
 	}
-	void Create_Node()
+	void get()
 	{
-		int value;
-		cout << "elemnt inside the list \n";
-		cin >> value;
-		node* temp = new node;
-		temp->data = value;
-		temp->next = NULL;
-		if (head == NULL)
+		cout << "Enter the element you want to find inside the array \n";
+		int element;
+		cin >> element;
+		int count = 0;
+		while (ptr != *(&arr + 1))
 		{
-			head = temp;
-			tail = temp;
-			temp = NULL;
-		}
-		else
-
-		{
-			tail->next = temp;
-			tail = tail->next;
-
-		}
-
-	}
-	void Insert_in_the_start()
-	{
-		int x;
-		cout << "Enter the element that you want to insert in the start \n";
-		cin >> x;
-		node* temp = new node;
-		temp->data = x;
-		temp->next = head;
-		head = temp;
-	}
-	void Insert_in_the_end()
-	{
-		int x;
-		cout << endl;
-		cout << "Enter the element that you want to insert at the end \n";
-		cin >> x;
-		node* temp = new node;
-		temp->data = x;
-		temp->next = NULL;
-		if (head == NULL)
-		{
-			head = temp;
-			tail = temp;
-			temp = NULL;
-		}
-		else
-		{
-			tail->next = temp;
-			tail = tail->next;
-
-		}
-
-	}
-	void Insert_at_the_new_pos()
-	{
-		int pos;
-		int x;
-		cout << "Enter the position of your new node \n";
-		cin >> pos;
-		node* curr = new node;
-		node* pre = new node;
-		node* temp = new node;
-		curr = head;
-		for (int i = 1; i < pos; i++)
-		{
-			pre = curr;
-			curr = curr->next;
-		}
-		cout << "Enter the data \n";
-		cin >> x;
-		temp->data = x;
-		pre->next = temp;
-		temp->next = curr;
-
-	}
-
-	void display()
-	{
-		node* temp = new node;
-		temp = head;
-		while (temp != NULL)
-		{
-			cout << temp->data << "\t";
-			temp = temp->next;
-		}
-	}
-
-	void Delete_First_Node()
-	{
-		cout << "After deleting the first node of the list \n";
-		node* temp = new node;
-		temp = head;
-		head = head->next;
-		delete temp;
-	}
-	void Delete_End()
-	{
-		node* current = new node;
-		node* previous = new node;
-		current = head;
-		while (current->next != NULL)
-		{
-			previous = current;
-			current = current->next;
-
-		}
-		tail = previous;
-		previous->next = NULL;
-		delete current;
-	}
-
-	void Delete_Position()
-	{
-		int position;
-		cout << "Enter the position of the node you want to delete \n";
-		cin >> position;
-		node* current = new node;
-		node* previous = new node;
-		current = head;
-		for (int i = 1; i < position; i++)
-		{
-			previous = current;
-			current = current->next;
-			
-		}
-		previous->next = current->next;
-	}
-
-	int Search()
-	{
-		int index = 0;
-		int s;
-		cout << "Enter the element you want to search \n";
-		cin >> s;
-		node* temp = head;
-		while (temp != NULL)
-		{
-			if (temp->data == s)
+			if (*ptr == element)
 			{
-				cout << "Element is found \t" << "at node \t" << index << endl;
-				return index;
+				cout << *ptr << " is present at index  " << count << endl;
 				break;
 			}
-			temp = temp->next;
-			index++;
+			ptr++;
+			count++;
 			
-
-
-
 		}
-		cout << "Not found \n";
-		return -1;
+		cout << endl;
+
 	}
-	void Size()
+	void update()
 	{
-		node* temp = head;
-		int size = 0;
-		while (temp != NULL)
+		cout << "Enter the element you want to update \n";
+		int update;
+		int newElement;
+		cin >> update;
+		int count=0;
+		cout << "Enter the new element \n";
+		cin >> newElement;
+		while (ptr < *(&arr + 1))
 		{
-			temp=temp->next;
-			size++;
+			if (*ptr == update)
+			{
+				*ptr = newElement;
+				break;
+			}
+			
+			count++;
+			ptr++;
+		
+		
 		}
-		cout << "Size of list is " << size << endl;
+		cout << "The new element is " << *ptr << " at index " << count << endl;
+		
 	}
-	
-    void prupose_checker()
-    {
-        string result=" ";
-        string order_type=" ";
-        temp=temp1=head;
-        while (temp!=NULL && temp1!=NULL)      
-        {
-            //temp1=temp->next;
-            if (temp->data >= temp1->next->data)
-            {
-                result="sorted";
-                order_type="Ascending";
-                
-            }
-            else if (temp->data <= temp1->next->data)
-            {
-                result="sorted";
-                order_type="Descending";
-            }
-            
-            else
-            {
-                result="unsorted";
-            }
-            temp=temp->next;
-            
-            
-        }
-        
-        cout<<"list is "<<result<<endl;
-        cout<<"list is in "<<order_type<<" order "<<endl;
-    }
+	void back()
+	{
+		int element;
+		cout << "Enter the current element inside the array where pointer is pointing \n";
+		cin >> element;
+		while (*ptr != element)
+		{
+			ptr++;
+		}
+		ptr--;
+		cout << "The element present before the element that you entered is  " << *ptr << endl;
 
+	}
+	void next()
+	{
+		int element;
+		cout << "Enter the current element inside the array where the pointer is pointing \n";
+		cin >> element;
+		while (ptr !=*(&arr+1))
+		{
+			ptr++;
+
+		}
+		ptr++;
+		cout << "The element present after the element that you entered is  " << *ptr << endl;
+	}
+	void start()
+	{
+		ptr = arr;
+		cout << "The element at the start of array \n"<<*ptr << endl;
+	}
+	void end()
+	{
+		while (ptr != *(&arr + 1))
+		{
+			if (ptr= *(&arr))
+			{
+				cout<<"The element at the end of the array is \n" << *ptr << endl;
+				break;
+			}
+		}
+	}
+	void Search()
+	{
+		int x, y = 0;
+		cout << "Enter the element you want to search inside the array \n";
+		cin >> x;
+		while (*arr != -1)
+		{
+			ptr++;
+			
+			if (*arr == x)
+			{
+				cout << "The element you searched for is present \n";
+				return;
+			}
+			else
+			{
+				cout << "element not found \n";
+				break;
+			}
+		}
+		
+
+	}
+	void remove();
+	void add();
 };
-
 
 int main()
 {
-	list a;
-	a.Create_Node();
-	a.Create_Node();
-	a.Create_Node();
-	a.Create_Node();
-	a.Create_Node();
-	cout << endl;
-	cout << endl;
-	a.display();
-	cout << endl;
-	cout << endl;
-	a.Size();
-	a.prupose_checker();
-   
-    cout << endl;
-	cout << endl;
-    
+	ArrayPlaying ApOBJ;
+	//ApOBJ.get();
+	//ApOBJ.update();
+	//ApOBJ.back();
+	//ApOBJ.next();
+	//ApOBJ.start();
+	//ApOBJ.end();
+	ApOBJ.Search();
+
 	return 0;
 }
